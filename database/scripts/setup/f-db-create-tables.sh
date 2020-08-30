@@ -29,7 +29,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "CREATE TABLE
         PRIMARY KEY (id));"
 
 # fill the table with the downloaded csv
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "COPY exercices.death_row
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "COPY ${DB_NAME}.death_row
         (id,
         date_of_birth,
         date_of_offence,

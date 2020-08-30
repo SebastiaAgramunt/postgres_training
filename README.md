@@ -8,6 +8,8 @@ To start postgres and pgadmin run
 
 ```make start```
 
+here you will be prompted into the bash command line from the postgres container. 
+
 Then to stop
 
 ```make stop```
@@ -37,6 +39,21 @@ POSTGRES_DB: 'postgres'
 and custom users and admins from ```db-config.sh```.
 
 During this setup the docker also executes the files that have been mapped to ```/docker-entrypoint-initdb.d/``` in the container. This is, the files in ```./database/scripts/setup/``` and are executed by alphabetical order. So firts, we will create the database, then the admin role, the user, the schemas and finally the tables and its population (we will insert into table the previously downloaded csv here).
+
+After the setup you can type
+
+```
+docker exec -it postgres bash
+psql -d exercices -U admin
+```
+
+to open a bash terminal inside the postgres container and once there open the postgresql command line. Now you can execute simple queries:
+
+```
+SELECT date_of_birth,last_name,first_name, race, county, execution_date FROM exercices.death_row LIMIT 10;
+```
+
+
 
 ## Start Pgadmin
 

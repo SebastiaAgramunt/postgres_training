@@ -23,3 +23,7 @@ start: postgres pgadmin
 stop:
 	docker stop postgres; docker rm postgres;
 	docker stop pgadmin; docker rm pgadmin;
+
+.PHONY: clean
+clean: stop
+	docker rmi postgres; docker rmi pgadmin;
