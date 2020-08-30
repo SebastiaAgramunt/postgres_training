@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+
+  postgres:
+    image: postgres:alpine
+    ports:
+      - '5432:5432'
+    network_mode: bridge
+    container_name: postgres
+
+    environment:
+      # required to startup the postgress database
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'pgpass'
+      POSTGRES_DB: 'postgres'
+
+      # this is our custom environment
+      DB_NAME: ${DB_NAME}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD} 
+
+    # Copy files from dbinit into the image so that they will be run on boot
+    volumes:
+      - ./database/scripts/setup:/docker-entrypoint-initdb.d/
+      - ./data/:/tmp/
