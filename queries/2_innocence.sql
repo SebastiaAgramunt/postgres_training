@@ -90,4 +90,6 @@ FROM exercices.death_row;
 
 
 # Find the proportion of inmates with claims of innocence in their last statements.
-
+SELECT
+100.0 * COUNT(CASE WHEN last_statement LIKE '%innocen%' THEN 1 ELSE NULL END) / COUNT(*) AS prop_claim_innocence
+FROM exercices.death_row;

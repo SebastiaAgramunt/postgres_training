@@ -63,8 +63,15 @@ INSERT INTO tablename (ID,NAME,AGE,ADDRESS,SALARY)
 VALUES (1, 'Pepito', 32, 'Ronda Sant Pere 8', 20000.00);
 
 
+# create a new table from a query
+CREATE TABLE new_table AS
+SELECT NAME
+FROM tablename;
+
+
 # drop table
 DROP TABLE IF EXISTS dbname.tablename;
+DROP TABLE IF EXISTS dbname.new_table;
 
 
 # SCHEMAS ##############################################################################
