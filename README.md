@@ -8,7 +8,7 @@ To start postgres and pgadmin run
 
 ```make start```
 
-here you will be prompted into the bash command line from the postgres container. 
+here you will be prompted into the bash command line from the postgres container. Type ```psql -d exercices -U admin``` to enter the query command line.
 
 Then to stop
 
