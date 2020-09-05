@@ -17,3 +17,17 @@
 
 -- Dates
 SELECT DATE('1993-08-10') - DATE('1989-07-07') AS day_difference;
+
+
+-- Build a table with the last execution date for each id.
+SELECT
+  id + 1 AS id_number,
+  execution_date AS last_execution_date
+FROM exercices.death_row
+WHERE id < 553;
+
+
+SELECT last_ex_date AS start, ex_date AS end, ex_date - last_ex_date AS day_difference
+FROM exercices.death_row
+JOIN previous
+ON exercies.death_row.id = previous.ex_number;
