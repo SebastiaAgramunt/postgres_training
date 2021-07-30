@@ -1,5 +1,5 @@
 .PHONY: all test clean build dev tdd run
-.DEFAULT_GOAL := run
+#.DEFAULT_GOAL := run
 SHELL         := /bin/bash
 
 db-setup:
