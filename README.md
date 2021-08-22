@@ -63,3 +63,25 @@ which should give you
     5263 | home_page    |     1451632737
     7891 | search       |     1451646428
 ```
+
+## Exercices
+
+The database created is named `exercices` by default. There you can find several tables:
+
+```
+ Schema |          Name           | Type  | Owner
+--------+-------------------------+-------+-------
+ public | death_row               | table | admin
+ public | exercise_1              | table | admin
+ public | exercise_2_mobile       | table | admin
+ public | exercise_2_web          | table | admin
+ public | exercise_3              | table | admin
+ public | exercise_4_april        | table | admin
+ public | exercise_4_march        | table | admin
+ public | exercise_5_transactions | table | admin
+ public | exercise_5_users        | table | admin
+ public | exercise_6              | table | admin
+
+```
+
+Death_row table is the table from the examples in [Select Star SQL](https://selectstarsql.com/). Then on `queries/more_queries.sql` there's a list of query questions for learning whose solutions are in the bottom of the file. All tables exercise_* are referred to this last query script.
