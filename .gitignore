@@ -12,7 +12,6 @@
 *.swp
 *.tar
 *.xml
-*.zip
 *.bson
 venv*/
 .DS_Store
