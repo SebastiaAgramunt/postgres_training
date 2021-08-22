@@ -19,32 +19,32 @@
 SELECT DATE('1993-08-10') - DATE('1989-07-07') AS day_difference;
 
 -- Show the max id!
-SELECT MAX(id) FROM exercices.death_row;
+SELECT MAX(id) FROM death_row;
 -- Build a table with the last execution date for each id.
 SELECT
   id + 1 AS id_number,
   execution_date AS last_execution_date
-FROM exercices.death_row
+FROM death_row
 WHERE id < 553;
 
 
 -- Make the table of the difference between current and last execution
-CREATE TABLE exercices.day_difference_table AS
+CREATE TABLE day_difference_table AS
 SELECT
   last_execution_date AS start,
   execution_date AS end,
   execution_date - last_execution_date AS day_difference
-FROM exercices.death_row
+FROM death_row
 JOIN (SELECT
 	  id + 1 AS id_number,
 	  execution_date AS last_execution_date
-	  FROM exercices.death_row
+	  FROM death_row
 	  WHERE id < 553) previous_query
-ON exercices.death_row.id = previous_query.id_number
+ON death_row.id = previous_query.id_number
 ORDER BY day_difference DESC;
 
 SELECT *
-FROM exercices.day_difference_table
+FROM day_difference_table
 ORDER BY day_difference DESC
 LIMIT 40;
 

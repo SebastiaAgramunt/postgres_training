@@ -1,7 +1,6 @@
 #! /usr/bin/env sh
 
-
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY death_row
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY death_row
         (id,
         date_of_birth,
         date_of_offence,
@@ -25,7 +24,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
         CSV HEADER;"
 
 # fill the table with the downloaded csv
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_1
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_1
         (user_id,
         page,
         unix_timestamp)
@@ -36,7 +35,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 # fill the table with the downloaded csv
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_2_mobile
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_2_mobile
         (user_id,
         page)
         FROM '${RAW_DATA}/dataset_2/query_two_mobile.csv'
@@ -46,7 +45,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 # fill the table with the downloaded csv
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_2_web
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_2_web
         (user_id,
         page)
         FROM '${RAW_DATA}/dataset_2/query_two_web.csv'
@@ -55,7 +54,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 # fill the table with the downloaded csv
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_3
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_3
         (user_id,
         date)
         FROM '${RAW_DATA}/dataset_3.csv'
@@ -63,7 +62,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
         CSV HEADER;"
 
 
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_4_april
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_4_april
         (user_id,
         date,
         transaction_amount)
@@ -72,7 +71,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
         CSV HEADER;"
 
 
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_4_march
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_4_march
         (user_id,
         date,
         transaction_amount)
@@ -81,7 +80,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
         CSV HEADER;"
 
 
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_5_users
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_5_users
         (user_id,
         sign_up_date)
         FROM '${RAW_DATA}/dataset_5/query_five_users.csv'
@@ -89,7 +88,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
         CSV HEADER;"
 
 
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_5_transactions
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_5_transactions
         (user_id,
         transaction_date,
         transaction_amount)
@@ -98,7 +97,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
         CSV HEADER;"
 
 
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_6
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p ${PORT} -d ${DB_NAME} -U ${ADMIN_USER} -c "COPY exercise_6
         (user_id,
         created_at,
         country)

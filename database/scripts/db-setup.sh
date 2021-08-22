@@ -8,17 +8,16 @@ fi
 
 # stop database if initiated
 ./scripts/db-stop.sh
+sleep 5
 
 # remove the entire database and initiate a new one
 rm -rf $POSTGRES_DATA
 mkdir -p $POSTGRES_DATA
 initdb -D ${POSTGRES_DATA}
 
-# start the database and put all logs to db-logs.log
+# start the database
 ./scripts/db-start.sh &
 sleep 5
-
-#./scripts/setup/aa-all.sh
 
 ./scripts/setup/a-create-admin.sh
 ./scripts/setup/b-create-database.sh

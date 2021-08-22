@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export DB_NAME=exercices
+export PORT=5432
 
 export DB_USER=usuari
 export DB_PASSWORD=LrDwb53E7DmFc2j4qw77n4pUUfKtULDVh4vrHjWw

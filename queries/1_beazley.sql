@@ -3,12 +3,12 @@
 
 # Find the first and last names and ages (age_at_exec) of inmates 25 or younger at time of execution.
 SELECT first_name, last_name, age_at_exec 
-FROM exercices.death_row
+FROM death_row
 WHERE age_at_exec<=25;
 
 # Find the row for Raymond Landry
 SELECT *
-FROM exercices.death_row
+FROM death_row
 WHERE first_name='Raymond' AND last_name='Landry';
 
 
@@ -17,10 +17,10 @@ WHERE first_name='Raymond' AND last_name='Landry';
 # 'anything Landry anything', so will use %. Actually 'Landry%' would work because the
 # row is 'Landry Sr.'
 SELECT *
-FROM exercices.death_row
+FROM death_row
 WHERE first_name='Raymond' AND last_name LIKE '%Landry%';
 
 # Find Napoleon Beazley's last statement.
 SELECT first_name, last_name, last_statement
-FROM exercices.death_row
+FROM death_row
 WHERE first_name LIKE '%Napoleon%' AND last_name LIKE '%Beazley%';

@@ -24,11 +24,13 @@ db-setup:
 db-start:
 	@scripts/db-start.sh > ${DB-START-LOG} 2>&1 &
 	@echo "db-start writing logs to ${DB-START-LOG}"
+	@echo "logs in ${PWD}/${DB-START-LOG}"
 
 .PHONY: db-stop # : stop postgres database
 db-stop:
 	@echo "db-stop writing logs to ${DB-STOP-LOG}"
 	@scripts/db-stop.sh > ${DB-STOP-LOG} 2>&1
+	@echo "logs in ${PWD}/${DB-STOP-LOG}"
 
 .PHONY: list # : Makefile command list
 list:
