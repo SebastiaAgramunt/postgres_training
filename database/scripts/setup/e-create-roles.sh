@@ -1,16 +1,18 @@
 #! /usr/bin/env sh
 
-echo "creating role in schema ${DB_NAME}"
+echo "creating role ${READWRITE_ROLE} in schema ${DB_NAME} and adding user ${DB_USER} to it"
 
+# create a readwrite role
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "CREATE ROLE ${READWRITE_ROLE};"
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "GRANT CONNECT ON DATABASE ${DB_NAME} TO ${READWRITE_ROLE};"
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "GRANT USAGE, CREATE ON SCHEMA ${DB_NAME} TO ${READWRITE_ROLE};"
+# grant privileges to existing tables in schema
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA ${DB_NAME} TO ${READWRITE_ROLE};"
+# grant privileges to future tables
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO ${READWRITE_ROLE};"
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "GRANT USAGE ON ALL SEQUENCES IN SCHEMA ${DB_NAME} TO ${READWRITE_ROLE};"
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "ALTER DEFAULT PRIVILEGES IN SCHEMA ${DB_NAME} GRANT USAGE ON SEQUENCES TO ${READWRITE_ROLE};"
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "ALTER DEFAULT PRIVILEGES GRANT ALL ON FUNCTIONS TO ${READWRITE_ROLE};"
 
-# readwrite role for DB_USER
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "create role readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "grant connect on database ${DB_NAME} to readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "grant usage, create on schema ${DB_NAME} to readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "grant select, insert, update, delete on all tables in schema ${DB_NAME} to readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "alter default privileges in schema ${DB_NAME} grant select, insert, update, delete on tables to readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "grant usage on all sequences in schema ${DB_NAME} to readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "alter default privileges in schema ${DB_NAME} grant usage on sequences to readwrite;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "alter default privileges grant all on functions to readwrite;"
-
-PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U${ADMIN_USER} -c "grant readwrite to ${DB_USER};"
+# add user to the readwrite role
+PGPASSWORD=${ADMIN_PASSWORD} psql -d ${DB_NAME} -U ${ADMIN_USER} -c "GRANT ${READWRITE_ROLE} TO ${DB_USER};"

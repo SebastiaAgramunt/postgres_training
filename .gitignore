@@ -26,3 +26,5 @@ venv*/
 env
 lib
 data
+database/db-data
+database/raw-data

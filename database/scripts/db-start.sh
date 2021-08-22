@@ -2,7 +2,7 @@
 
 if [ -z "${DB_NAME}" ]
 then
-    source ./scripts/db-config.sh $1
+    source ./scripts/db-config.sh
 fi
 
 FILE=$POSTGRES_DATA/postmaster.pid

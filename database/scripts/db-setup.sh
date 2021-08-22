@@ -1,19 +1,24 @@
 #! /usr/bin/env sh
+
+echo "db-setup log..."
 if [ -z "${DB_NAME}" ]
 then
-    source ./scripts/db-config.sh $1
+    source ./scripts/db-config.sh
 fi
 
-
-
+# stop database if initiated
 ./scripts/db-stop.sh
 
+# remove the entire database and initiate a new one
 rm -rf $POSTGRES_DATA
 mkdir -p $POSTGRES_DATA
 initdb -D ${POSTGRES_DATA}
 
-./scripts/db-start.sh $1 &
-sleep 1
+# start the database and put all logs to db-logs.log
+./scripts/db-start.sh &
+sleep 5
+
+#./scripts/setup/aa-all.sh
 
 ./scripts/setup/a-create-admin.sh
 ./scripts/setup/b-create-database.sh
@@ -21,12 +26,9 @@ sleep 1
 ./scripts/setup/d-create-schema.sh
 ./scripts/setup/e-create-roles.sh
 ./scripts/setup/f-db-create-tables.sh
+./scripts/setup/g-fill-tables.sh
 
-# ./scripts/setup/c-db-create-user.sh
-# ./scripts/setup/d-db-create-schema.sh
-# ./scripts/setup/e-db-create-roles.sh
 
-# echo "database ${PPML_DB_NAME} setup complete"
-
-# sleep 1
-# ./scripts/db-stop.sh $1
+# stop database if initiated
+./scripts/db-stop.sh
+echo "database setup finished"

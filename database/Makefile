@@ -1,21 +1,36 @@
-.PHONY: all test clean build dev tdd run
-#.DEFAULT_GOAL := run
+.DEFAULT_GOAL := list
 SHELL         := /bin/bash
 
+COLOR_RESET = \033[0m
+COLOR_COMMAND = \033[36m
+COLOR_YELLOW = \033[33m
+COLOR_GREEN = \033[32m
+COLOR_RED = \033[31m
+
+AUTHOR := Sebastia Agramunt Puig
+PROJECT := Postgres Bolilerplate (Author ${AUTHOR})
+
+DB-SETUP-LOG=db-setup.log
+DB-START-LOG=db-start.log
+DB-STOP-LOG=db-stop.log
+
+.PHONY: db-setup # : create a new database and upload raw_data
 db-setup:
-	@scripts/db-setup.sh
-	@scripts/db-init.sh
-	@scripts/db-start.sh
+	@echo "db-setup writing logs to ${DB-SETUP-LOG}"
+	@scripts/db-setup.sh > ${DB-SETUP-LOG} 2>&1
+	@echo "setup finished, logs in ${PWD}/${DB-SETUP-LOG}"
 
-db-init:
-	# make target_db=test db-init
-	@scripts/db-init.sh $(target_db)
-
+.PHONY: db-start # : start postgres database
 db-start:
-	@scripts/db-start.sh $(target_db)
+	@scripts/db-start.sh > ${DB-START-LOG} 2>&1 &
+	@echo "db-start writing logs to ${DB-START-LOG}"
 
+.PHONY: db-stop # : stop postgres database
 db-stop:
-	@scripts/db-stop.sh $(target_db)
+	@echo "db-stop writing logs to ${DB-STOP-LOG}"
+	@scripts/db-stop.sh > ${DB-STOP-LOG} 2>&1
 
-install-dev:
-	@scripts/install-dev.sh
+.PHONY: list # : Makefile command list
+list:
+	printf "\n${COLOR_YELLOW}${PROJECT}\n-------------------------------------------------------------------\n${COLOR_RESET}"
+	@grep '^.PHONY: .* #' Makefile | sed 's/\.PHONY: \(.*\) # \(.*\)/\1 \2/' | expand -t20
