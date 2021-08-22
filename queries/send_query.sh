@@ -1,7 +1,13 @@
-psql -h localhost -p 5432 -U postgres -f 0_basics.sql
+#!/bin/bash
+
+# load the confiuration
+source ./scripts/db-config.sh
+
+# command line execution:
+# psql -h localhost -p 5432 -U postgres -f 0_basics.sql
 
 
-# Exercice 1
+# Exercise 1
 ###################################################################################################
 ###################################################################################################
 
@@ -10,7 +16,8 @@ psql -h localhost -p 5432 -U postgres -f 0_basics.sql
 # her from the final results or keep that user_id and have NULL as time difference between the two actions.
 
 query="SELECT * FROM exercise_1 LIMIT 10;"
-PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
+PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c ${query}
+#psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c ${query}
 
 #  user_id |     page     | unix_timestamp
 # ---------+--------------+----------------
@@ -27,8 +34,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 
-
-# Exercice 2
+# Exercise 2
 ###################################################################################################
 ###################################################################################################
 
@@ -38,7 +44,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 # only web and both. That is, the percentage of users who are only in the mobile table, 
 # only in the web table and in both tables. The sum of the percentages should return 1.
 
-query="SELECT * FROM query_two_web LIMIT 10;"
+query="SELECT * FROM exercise_2_web LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 #  user_id |    page
@@ -54,7 +60,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 #      361 | page_7_web
 #      333 | page_2_web
 
-query="SELECT * FROM query_two_mobile LIMIT 10;"
+query="SELECT * FROM exercise_2_mobile LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 #  user_id |     page
@@ -71,7 +77,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 #      736 | page_3_mobile
 
 
-# Exercice 3
+# Exercise 3
 ###################################################################################################
 ###################################################################################################
 # We define as power users those users who bought at least 10 products. Write a query that returns 
@@ -79,7 +85,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 # bought the 10th item. The table below represents transactions. That is, each row means that the
 # corresponding user has bought something on that date.
 
-query="SELECT * FROM query_three LIMIT 10;"
+query="SELECT * FROM exercise_3 LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 
@@ -97,7 +103,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 #      315 | 2014-12-31
 
 
-# Exercice 4
+# Exercise 4
 ###################################################################################################
 ###################################################################################################
 
@@ -113,7 +119,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 # that day. Obviously, the last day cumulative sum should match the numbers 
 # from the previous bullet point.
 
-query="SELECT * FROM query_four_march LIMIT 10;"
+query="SELECT * FROM exercise_4_march LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 #  user_id |    date    | transaction_amount
@@ -130,7 +136,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 #    18472 | 2015-03-01 |                 54
 
 
-query="SELECT * FROM query_four_april LIMIT 10;"
+query="SELECT * FROM exercise_4_april LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 
@@ -151,7 +157,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 
-# Exercice 5
+# Exercise 5
 ###################################################################################################
 ###################################################################################################
 # We have two tables. One is user id and their signup date. The other one shows all transactions 
@@ -162,7 +168,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 
-query="SELECT * FROM query_five_users LIMIT 10;"
+query="SELECT * FROM exercise_5_users LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 #  user_id | sign_up_date
@@ -180,7 +186,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 
-query="SELECT * FROM query_five_transactions LIMIT 10;"
+query="SELECT * FROM exercise_5_transactions LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 #  user_id | transaction_date | transaction_amount
@@ -197,7 +203,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 #    35815 | 2015-06-01       |                 75
 
 
-# Exercice 6
+# Exercise 6
 ###################################################################################################
 ###################################################################################################
 # We have a table with users, their country and when they created the account. We want to find:
@@ -206,9 +212,8 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 # * A query that returns for each country the first and the last user who signed up (if that 
 # country has just one user, it should just return that single user)
 
-query="SELECT * FROM query_six LIMIT 10;"
+query="SELECT * FROM exercise_6 LIMIT 10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
-
 
 #  user_id | created_at |  country
 # ---------+------------+------------
@@ -227,17 +232,17 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 # SOLUTIONS...
-#**************************************************************************************************
-#**************************************************************************************************
-#**************************************************************************************************
-#**************************************************************************************************
-#**************************************************************************************************
+# **************************************************************************************************
+# **************************************************************************************************
+# **************************************************************************************************
+# **************************************************************************************************
+# **************************************************************************************************
 
 
 
 
 
-# Solution Exercice 1
+# Solution Exercise 1
 ###################################################################################################
 ###################################################################################################
 
@@ -277,8 +282,8 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # find total unique users with full outer join
 query="SELECT COUNT(*) AS total_unique_users
-       FROM (SELECT DISTINCT(user_id) AS user_id FROM query_two_web) as tablea
-       FULL OUTER JOIN (SELECT DISTINCT(user_id) AS user_id FROM query_two_mobile) AS tableb
+       FROM (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_web) as tablea
+       FULL OUTER JOIN (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_mobile) AS tableb
        ON tablea.user_id=tableb.user_id;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
@@ -289,8 +294,8 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # find common users with inner join
 query=" SELECT COUNT(tablea.user_id) as common_users
-        FROM (SELECT DISTINCT(user_id) AS user_id FROM query_two_web) as tablea
-        INNER JOIN (SELECT DISTINCT(user_id) AS user_id FROM query_two_mobile) AS tableb
+        FROM (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_web) as tablea
+        INNER JOIN (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_mobile) AS tableb
         ON tablea.user_id=tableb.user_id;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
@@ -301,8 +306,8 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # find unique web users with left join and user_id null on mobile_users
 query=" SELECT COUNT(tablea.user_id) AS unique_web_users
-        FROM (SELECT DISTINCT(user_id) AS user_id FROM query_two_web) as tablea
-        LEFT JOIN (SELECT DISTINCT(user_id) AS user_id FROM query_two_mobile) AS tableb
+        FROM (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_web) as tablea
+        LEFT JOIN (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_mobile) AS tableb
         ON tablea.user_id=tableb.user_id
         WHERE tableb.user_id IS NULL"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
@@ -314,8 +319,8 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # find unique mobile users with right join (same as left join but chaning names)
 query=" SELECT COUNT(tableb.user_id) AS unique_mobile_users
-        FROM (SELECT DISTINCT(user_id) AS user_id FROM query_two_web) as tablea
-        RIGHT JOIN (SELECT DISTINCT(user_id) AS user_id FROM query_two_mobile) AS tableb
+        FROM (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_web) as tablea
+        RIGHT JOIN (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_mobile) AS tableb
         ON tablea.user_id=tableb.user_id
         WHERE tablea.user_id IS NULL"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
@@ -332,8 +337,8 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # to find the percentages we can do a full outer join with the two tables
 query="SELECT web.user_id, mobile.user_id
-       FROM (SELECT DISTINCT(user_id) AS user_id FROM query_two_web) as web
-       FULL OUTER JOIN (SELECT DISTINCT(user_id) AS user_id FROM query_two_mobile) AS mobile
+       FROM (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_web) as web
+       FULL OUTER JOIN (SELECT DISTINCT(user_id) AS user_id FROM exercise_2_mobile) AS mobile
        ON web.user_id=mobile.user_id;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
@@ -357,12 +362,15 @@ query="SELECT 100*SUM(CASE WHEN m.user_id IS null THEN 1 ELSE 0 END)/COUNT(*) as
        100*SUM(CASE WHEN w.user_id IS null THEN 1 ELSE 0 END)/COUNT(*) as MOBILE_ONLY,
        100*SUM(CASE WHEN m.user_id IS NOT null AND w.user_id IS NOT null THEN 1 ELSE 0 END)/COUNT(*) as BOTH
 FROM
-(SELECT distinct user_id FROM query_two_web ) w
+(SELECT distinct user_id FROM exercise_2_web ) w
 FULL OUTER JOIN
-(SELECT distinct user_id FROM query_two_mobile ) m
+(SELECT distinct user_id FROM exercise_2_mobile ) m
 ON m.user_id = w.user_id;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
+#  web_only | mobile_only | both
+# ----------+-------------+------
+#        16 |          31 |   52
 
 
 # Solution Exercise 3
@@ -374,7 +382,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 query=" SELECT user_id, 
         ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY date ASC) AS row_number,
         date
-        FROM query_three;"
+        FROM exercise_3;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 
@@ -382,7 +390,7 @@ query="SELECT user_id, date
        FROM (SELECT user_id,
              ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY date ASC) AS row_number, 
              date 
-             FROM query_three) AS tmp
+             FROM exercise_3) AS tmp
        WHERE row_number=10;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
@@ -394,7 +402,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 query="SELECT tmp.user_id as user_id, SUM(tmp.transaction_amount) AS transaction_amount
-       FROM (SELECT * FROM query_four_march UNION ALL SELECT * FROM query_four_april) as tmp
+       FROM (SELECT * FROM exercise_4_march UNION ALL SELECT * FROM exercise_4_april) as tmp
        GROUP BY tmp.user_id
        ORDER BY tmp.user_id;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
@@ -408,15 +416,15 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # see if there is only sign_up date per user (sanity check)
 query="SELECT * 
-       FROM (SELECT COUNT(sign_up_date) AS count FROM query_five_users GROUP BY user_id) AS tmp
+       FROM (SELECT COUNT(sign_up_date) AS count FROM exercise_5_users GROUP BY user_id) AS tmp
        WHERE count>1;"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
 
 
 query="SELECT tmp.user_id, tmp.sign_up_date, tmp2.transaction_amount, tmp2.transaction_date
-       FROM query_five_users AS tmp
-       LEFT JOIN query_five_transactions AS tmp2
+       FROM exercise_5_users AS tmp
+       LEFT JOIN exercise_5_transactions AS tmp2
        ON tmp.sign_up_date=tmp2.transaction_date AND tmp.user_id=tmp2.user_id
        WHERE tmp2.transaction_date IS NOT NULL"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
@@ -424,12 +432,23 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 
 query="SELECT tmp.user_id, AVG(tmp2.transaction_amount) AS average_transaction
-       FROM query_five_users AS tmp
-       LEFT JOIN query_five_transactions AS tmp2
+       FROM exercise_5_users AS tmp
+       LEFT JOIN exercise_5_transactions AS tmp2
        ON tmp.sign_up_date=tmp2.transaction_date AND tmp.user_id=tmp2.user_id
        WHERE tmp2.transaction_date IS NOT NULL
        GROUP BY tmp.user_id"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
+
+#  user_id | average_transaction
+# ---------+---------------------
+#     6701 | 77.0000000000000000
+#     7302 | 61.0000000000000000
+#     7864 | 63.0000000000000000
+#     8116 | 65.0000000000000000
+#     8143 | 54.0000000000000000
+#     8608 | 31.0000000000000000
+#     8675 | 60.0000000000000000
+#     9230 | 47.0000000000000000
 
 
 # Solution Exercise 6
@@ -439,18 +458,22 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 
 # solution to first question
 query="(SELECT COUNT(DISTINCT(user_id)) AS n_users, country
-FROM query_six
+FROM exercise_6
 GROUP BY country
 ORDER BY n_users ASC
 LIMIT 1)
 UNION ALL
 (SELECT COUNT(DISTINCT(user_id)) AS n_users, country
-FROM query_six
+FROM exercise_6
 GROUP BY country
 ORDER BY n_users DESC
 LIMIT 1)"
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
+#  n_users | country
+# ---------+---------
+#        1 | Vietnam
+#    18350 | China
 
 
 # exploring second question, you can see first and last values using window functions
@@ -459,7 +482,7 @@ PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_
 query="SELECT country,
               FIRST_VALUE(user_id) OVER(PARTITION BY country ORDER BY created_at) AS first_user,
               LAST_VALUE(user_id) OVER(PARTITION BY country ORDER BY created_at) AS last_user
-        FROM query_six
+        FROM exercise_6
 "
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
@@ -470,7 +493,7 @@ query=" SELECT country,
               user_id,
               ROW_NUMBER() OVER(PARTITION BY country ORDER BY created_at ASC) AS ascending_ord,
               ROW_NUMBER() OVER(PARTITION BY country ORDER BY created_at DESC) AS descending_ord
-              FROM query_six;
+              FROM exercise_6;
 "
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
 
@@ -482,7 +505,7 @@ query=" SELECT created_at, user_id, country
               user_id,
               ROW_NUMBER() OVER(PARTITION BY country ORDER BY created_at ASC) AS ascending_ord,
               ROW_NUMBER() OVER(PARTITION BY country ORDER BY created_at DESC) AS descending_ord
-              FROM query_six) AS tmp
+              FROM exercise_6) AS tmp
         WHERE ascending_ord=1 OR descending_ord=1;
 "
 PGPASSWORD=${ADMIN_PASSWORD} psql -h localhost -p 5432 -d ${DB_NAME} -U ${ADMIN_USER} -c $query
