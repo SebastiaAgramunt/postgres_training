@@ -28,7 +28,4 @@ sleep 5
 ./scripts/setup/f-db-create-tables.sh
 ./scripts/setup/g-fill-tables.sh
 
-
-# stop database if initiated
-./scripts/db-stop.sh
-echo "database setup finished"
+echo "database setup finished, now running..."

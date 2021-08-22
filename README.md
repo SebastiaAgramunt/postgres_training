@@ -1,81 +1,65 @@
 # Postgres Example
 
-A demonstration of how to set up a postgresql database using the data and problems in [Select Star SQL](https://selectstarsql.com/). Using this repo you can start a docker instance of postgresql and another one for pgadmin so that you can monitor your database. 
+This repository is a boilerplate for a postgresql project close to production. At the same time it serves as a tutorial with several examples from [Select Star SQL](https://selectstarsql.com/) and others.
 
-## Quick Init
+## Quick init
 
-To start postgres and pgadmin run
+### Install postgresql
+Install postgresql if it is not installed in your system. If you are running the code on MacOS just execute `install_postrges_mac.sh`. If it is installed just type `which psql` and it will show where is your psql istalled.
 
-```make start```
+### The database configuration
 
-here you will be prompted into the bash command line from the postgres container. Type ```psql -d exercices -U admin``` to enter the query command line.
+Configuration parameters of the database are in `database/scripts/db-config.sh`. This is, users, passwords and connection details that will be used on the set up. The database schema is on `database/scripts/setup/schema.sql`.
 
-Then to stop
 
-```make stop```
+### Get the raw data
+Raw data is compressed in `database/raw-data.zip`. To uncompress it go to `database` directory and type `raw-data.zip`. This will create a folder named `raw-data` inside the database directory with all the tables needed.
 
-A more detailed description comes next.
-
-## Start instance of postgres
-
-Generate the environment variables first:
-
-```./setup.sh```
-
-the script will download [this]('https://selectstarsql.com/data/tx_deathrow_full.csv') dataset from SelectStarSQL webpage and place it into ```./data/dataset.csv```. Then set the environment variables (see file ```./database/scripts/db-config.sh```) to a file .env for docker to use later.
-
-Start the docker for posgres by typing
-
-```docker-compose -f docker-compose.yml up```
-
-This will create the database with mandatory variables
+```bash
+cd database
+unzip raw-data.zip
 
 ```
-POSTGRES_USER: 'postgres'
-POSTGRES_PASSWORD: 'pgpass'
-POSTGRES_DB: 'postgres'
+
+
+### Setup the database
+Drive to the folder `database` abd use make with the instruction `db-setup`
+
+```bash
+cd database
+make db-setup
 ```
 
-and custom users and admins from ```db-config.sh```.
+The logs of the process can be viewed at `database/db-setup.log`. 
 
-During this setup the docker also executes the files that have been mapped to ```/docker-entrypoint-initdb.d/``` in the container. This is, the files in ```./database/scripts/setup/``` and are executed by alphabetical order. So firts, we will create the database, then the admin role, the user, the schemas and finally the tables and its population (we will insert into table the previously downloaded csv here).
+This whole process is a bit complex and involves not only the initiation of the database but also the execution of many bash scripts calling postgres to grant access to users, create the schema and even uploading the data to the tables. After this step you should have a database running on your machine.
 
-After the setup you can type
+### Login to the command line prompt
 
-```
-docker exec -it postgres bash
-psql -d exercices -U admin
-```
+Open a new terminal and type (if you haven't changed anything from `db-config.sh`)
 
-to open a bash terminal inside the postgres container and once there open the postgresql command line. Now you can execute simple queries:
-
-```
-SELECT date_of_birth,last_name,first_name, race, county, execution_date FROM exercices.death_row LIMIT 10;
+```bash
+psql -h localhost -p 5432 -d exercices -U usuari
 ```
 
+then check that the data is in the tables by writing a simple query:
 
-
-## Start Pgadmin
-
-Simply run the pgadmin docker on another terminal 
-
-```docker-compose -f pgadmin.yml up```
-
-Now go to [http://localhost:8080/](http://localhost:8080/) and open the admin. Type the email and the password in the web (same as the ones you have on the file ```pgadmin.yml```).
+```bash
+SELECT * FROM exercise_1 LIMIT 10;
+```
+which should give you
 
 ```
-PGADMIN_DEFAULT_EMAIL: 'admin@example.com'
-PGADMIN_DEFAULT_PASSWORD: 'admin'
+ user_id |     page     | unix_timestamp
+---------+--------------+----------------
+    6684 | home_page    |     1451640067
+    8098 | home_page    |     1451647141
+    9440 | home_page    |     1451653638
+    1003 | home_page    |     1451611211
+    4272 | product_page |     1451628024
+    8067 | search       |     1451647070
+    1314 | home_page    |     1451612802
+     845 | home_page    |     1451610443
+    5263 | home_page    |     1451632737
+    7891 | search       |     1451646428
 ```
-
-Create a new connection by clicking ```Add New Server```,
-
-```
-Name: postgres_server
-Host: postgres
-Port: 5432
-Username: admin
-Password: 123
-``` 
-
-click save, and now you are connected!.
